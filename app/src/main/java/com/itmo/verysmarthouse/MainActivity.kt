@@ -14,6 +14,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.smarthouse.ui.screens.MainScreen
 import com.example.smarthouse.ui.screens.RoomScreen
 import com.itmo.verysmarthouse.data.devices.AirConditioner
+import com.itmo.verysmarthouse.data.devices.Curtains
+import com.itmo.verysmarthouse.data.devices.Door
+import com.itmo.verysmarthouse.data.devices.IrrigationSystem
 import com.itmo.verysmarthouse.data.devices.Light
 import com.itmo.verysmarthouse.data.devices.VideoCamera
 import com.itmo.verysmarthouse.data.devices.WashingMachine
@@ -29,16 +32,37 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val lightPainter = painterResource(id = R.drawable.light)
-            val alarmClockPainter = painterResource(id = R.drawable.alarm_clock)
-            val coffeeMachinePainter = painterResource(id = R.drawable.coffee_machine)
+            val curtainsPainter = painterResource(id = R.drawable.curtain)
+            val washingMachinePainter = painterResource(id = R.drawable.washing_machine)
             val conditionerPainter = painterResource(id = R.drawable.airconditioner)
             val videcamPainter = painterResource(id = R.drawable.camera)
+            val irrigationSystemPainter = painterResource(id = R.drawable.irrigation)
+            val doorPainter = painterResource(id = R.drawable.bline)
             val lightName = "Light"
             val videoCamName = "CCTV"
 
+            val garage =  Room(
+            painterResource(id = R.drawable.garage),
+            "garage",
+            remember {
+                mutableStateListOf(
+                    IrrigationSystem(
+                        DeviceType.IRRIGATION_SYSTEM,
+                        irrigationSystemPainter,
+                        name = "Irrigation system",
+                        true,
+                        30f
+                    ),
+                    Light(DeviceType.LIGHT, lightPainter, lightName, true),
+                    VideoCamera(DeviceType.VIDEO_CAMERA, videcamPainter, videoCamName, true),
+                    Door(DeviceType.DOOR,doorPainter, name="Garage door", true, 30f)
+                )
+            }
+        )
+
             val livingRoom = Room(
                 painterResource(id = R.drawable.livingroom),
-                "Зал",
+                "living room",
                 remember {
                     mutableStateListOf(
                         AirConditioner(
@@ -66,12 +90,13 @@ class MainActivity : ComponentActivity() {
                             initialTemperature = 10.0f
                         ),
                         Light(DeviceType.LIGHT, lightPainter, lightName, true),
-                        AlarmClock(
-                            DeviceType.ALARM_CLOCK,
-                            alarmClockPainter,
-                            "Alarm clock",
+                        Curtains(
+                            DeviceType.CURTAINS,
+                            curtainsPainter,
+                            "Curtains",
                             true,
-                            LocalTime.of(8, 30)
+                            initialOpenness = 100.0f
+
                         ),
                         VideoCamera(DeviceType.VIDEO_CAMERA, videcamPainter, "CCTV", true),
 
@@ -93,7 +118,7 @@ class MainActivity : ComponentActivity() {
                         Light(DeviceType.LIGHT, lightPainter, lightName, true),
                         WashingMachine(
                             DeviceType.WASHING_MACHINE,
-                            coffeeMachinePainter,
+                            washingMachinePainter,
                             "Washing machine",
                             true,
                             WashingType.SOFT,
@@ -105,7 +130,7 @@ class MainActivity : ComponentActivity() {
                 }
             )
             val rooms = remember {
-                mutableStateListOf(livingRoom, bedroom, kitchen)
+                mutableStateListOf(livingRoom, bedroom, kitchen,garage)
             }
             val navController = rememberNavController()
             val mainScreen = "main"

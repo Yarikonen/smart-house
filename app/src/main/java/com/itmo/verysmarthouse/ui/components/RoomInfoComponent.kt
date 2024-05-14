@@ -1,8 +1,9 @@
 package com.itmo.verysmarthouse.ui.components
 
+import CurtainsSystemComponent
+import DoorComponent
 import android.annotation.SuppressLint
 import android.os.Build
-import android.provider.MediaStore.Video
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,8 +26,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.itmo.verysmarthouse.R
 import com.itmo.verysmarthouse.data.devices.AirConditioner
+import com.itmo.verysmarthouse.data.devices.Curtains
+import com.itmo.verysmarthouse.data.devices.Door
 import com.itmo.verysmarthouse.data.devices.IrrigationSystem
 import com.itmo.verysmarthouse.data.devices.Light
+import com.itmo.verysmarthouse.data.devices.MusicColumn
+import com.itmo.verysmarthouse.data.devices.Plug
 import com.itmo.verysmarthouse.data.devices.VideoCamera
 import com.itmo.verysmarthouse.data.devices.WashingMachine
 import com.itmo.verysmarthouse.data.enum.DeviceType
@@ -35,6 +40,8 @@ import com.itmo.verysmarthouse.data.interfaces.Device
 import com.itmo.verysmarthouse.ui.components.devices.AirConditionerComponent
 import com.itmo.verysmarthouse.ui.components.devices.IrrigationSystemComponent
 import com.itmo.verysmarthouse.ui.components.devices.LightComponent
+import com.itmo.verysmarthouse.ui.components.devices.MusicColumnComponent
+import com.itmo.verysmarthouse.ui.components.devices.PlugComponent
 import com.itmo.verysmarthouse.ui.components.devices.VidecamComponent
 import com.itmo.verysmarthouse.ui.components.devices.WashingMachineComponent
 import com.itmo.verysmarthouse.ui.components.templates.CreateTemplateComponent
@@ -52,7 +59,7 @@ fun RoomInfoComponent(devices: SnapshotStateList<Device>) {
         topBar = {
             Surface(shadowElevation = 5.dp) {
                 TopAppBar(
-                    title = { Text("Устройства") },
+                    title = { Text("Devices") },
                     actions = {
                         DropdownMoreVertTemplate {
                             dialogOpen.value = true
@@ -64,7 +71,7 @@ fun RoomInfoComponent(devices: SnapshotStateList<Device>) {
         content = {
             val suggestions = DeviceType.entries.toTypedArray()
             var selectedElement by remember {
-                mutableStateOf(DeviceType.VIDEO_CAMERA)
+                mutableStateOf(DeviceType.NONE)
             }
             val airConditionerPainter = painterResource(id = R.drawable.airconditioner)
 
@@ -75,6 +82,14 @@ fun RoomInfoComponent(devices: SnapshotStateList<Device>) {
             val lightPainter = painterResource(id = R.drawable.light)
             
             val washingMachinePainter = painterResource(id = R.drawable.kitchen)
+            
+            val curtainsPainter = painterResource(id = R.drawable.curtain)
+            
+            val doorPainter = painterResource(id = R.drawable.bline)
+            
+            val musicColumnPainter = painterResource(id = R.drawable.speaker)
+            
+            val plugPainter = painterResource(id = R.drawable.plug)
 
 
             CreateTemplateComponent(
@@ -122,10 +137,48 @@ fun RoomInfoComponent(devices: SnapshotStateList<Device>) {
                             WashingType.HARD,
                             LocalTime.of(15, 30)
                         )
+                        
+                        DeviceType.CURTAINS -> Curtains(
+                            DeviceType.CURTAINS,
+                            curtainsPainter,
+                            name,
+                            false,
+                            30f
+                        )
+                        
+                        DeviceType.DOOR -> Door(
+                            DeviceType.DOOR,
+                            doorPainter,
+                            name,
+                            false,
+                            30f
+                        )
+
+                        DeviceType.MUSIC_COLUMN -> MusicColumn(
+                            DeviceType.MUSIC_COLUMN,
+                            musicColumnPainter,
+                            name,
+                            false,
+                            30f
+                        )
+                        
+                        DeviceType.PLUG -> Plug(
+                            DeviceType.PLUG,
+                            plugPainter,
+                            name,
+                            false
+                        )
+                        
+                        DeviceType.NONE -> Plug(
+                            DeviceType.PLUG,
+                            plugPainter,
+                            name,
+                            false
+                        )
 
                     }
                     devices.add(device)
-                    selectedElement = DeviceType.VIDEO_CAMERA
+                    selectedElement = DeviceType.NONE
                 },
                 dialogOpen = dialogOpen,
                 suggestions = suggestions,
@@ -163,6 +216,14 @@ fun RoomInfoComponent(devices: SnapshotStateList<Device>) {
                                         is Light -> LightComponent(light = device)
                                         
                                         is WashingMachine -> WashingMachineComponent(washingMachine = device)
+                                        
+                                        is Curtains -> CurtainsSystemComponent(curtains = device)
+                                        
+                                        is Door -> DoorComponent(door = device)
+                                        
+                                        is MusicColumn -> MusicColumnComponent(musicColumn = device)
+                                        
+                                        is Plug -> PlugComponent(plug = device)
                                     }
                                 })
                         }

@@ -5,5 +5,6 @@ enum class RoomType (val translation: String){
     BEDROOM("Bedroom"),
     KITCHEN("Kitchen"),
     BATHROOM("Bathroom"),
+    GARAGE("Garage"),
     NONE("Other")
 }

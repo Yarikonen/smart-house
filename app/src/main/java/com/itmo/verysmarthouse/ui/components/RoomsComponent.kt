@@ -1,6 +1,7 @@
 package com.itmo.verysmarthouse.ui.components
 
 import android.util.Log
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.shape.AbsoluteCutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -22,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.itmo.verysmarthouse.data.devices.AirConditioner
+import com.itmo.verysmarthouse.data.devices.Light
 import com.itmo.verysmarthouse.data.devices.VideoCamera
 import com.itmo.verysmarthouse.data.rooms.Room
 import com.itmo.verysmarthouse.ui.components.templates.DeleteTemplateComponent
@@ -40,7 +43,8 @@ fun RoomsComponent(rooms: SnapshotStateList<Room>, onClick: (Room) -> Unit) {
                     .padding(10.dp)
                     .fillMaxWidth()
                     .clickable { onClick(room) },
-                shape = RoundedCornerShape(15.dp),
+                border = BorderStroke(1.dp,Color.Black),
+                shape = AbsoluteCutCornerShape(5.dp),
                 elevation = CardDefaults.cardElevation(
                     defaultElevation = 6.dp
                 ),
@@ -48,7 +52,7 @@ fun RoomsComponent(rooms: SnapshotStateList<Room>, onClick: (Room) -> Unit) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(Color(0, 153, 153)),
+                        .background(Color(0xFF93B33B)),
                     horizontalAlignment = Alignment.CenterHorizontally,
 
                     ) {
@@ -77,8 +81,8 @@ fun RoomsComponent(rooms: SnapshotStateList<Room>, onClick: (Room) -> Unit) {
                 ) {
                     room.devices.forEach { device ->
                         when (device) {
-                           is AirConditioner, is VideoCamera -> Text(
-                                text = if (device.status) device.name + ": " + "Включено" else device.name + ": " + "Выключено",
+                           is AirConditioner, is Light, is VideoCamera -> Text(
+                                text = if (device.status) device.name + ": " + "Enabled" else device.name + ": " + "Disabled",
                                 modifier = Modifier.padding(8.dp)
                             )
                         }

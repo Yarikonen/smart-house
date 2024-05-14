@@ -2,6 +2,7 @@ package com.itmo.verysmarthouse.ui.components.templates
 import com.itmo.verysmarthouse.data.enum.DeviceType
 
 import android.os.Build
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -11,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSizeIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.AbsoluteCutCornerShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -30,7 +30,6 @@ import coil.decode.ImageDecoderDecoder
 import coil.request.ImageRequest
 import coil.size.Size
 import com.itmo.verysmarthouse.R
-import com.itmo.verysmarthouse.ui.utils.VideoPlayer
 
 @Composable
 fun DeviceTemplateComponent(
@@ -46,7 +45,8 @@ fun DeviceTemplateComponent(
             .padding(10.dp)
             .fillMaxWidth()
             .fillMaxHeight(),
-        shape = AbsoluteCutCornerShape(15.dp),
+        border = BorderStroke(1.dp,Color.Black),
+        shape = AbsoluteCutCornerShape(5.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
         ),
@@ -54,7 +54,7 @@ fun DeviceTemplateComponent(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color(0, 153, 153)),
+                .background(Color(0xFF8F7B2D)),
             horizontalAlignment = Alignment.CenterHorizontally,
 
             ) {
@@ -78,18 +78,16 @@ fun DeviceTemplateComponent(
 
             if (initialStatus) {
                 when (deviceType) {
-                    DeviceType.VIDEO_CAMERA -> VideoPlayer(url = "http://115.179.100.76:8080/SnapshotJPEG?Resolution=640x480&amp;Quality=Clarity&amp;1715715872")
-
-//                    DeviceType.TELEVISOR -> Image(
-//                        painter = rememberAsyncImagePainter(
-//                            ImageRequest.Builder(context).data(data = R.drawable.tv_gif)
-//                                .apply(block = {
-//                                    size(Size.ORIGINAL)
-//                                }).build(), imageLoader = imageLoader
-//                        ),
-//                        contentDescription = null,
-//                        modifier = Modifier.requiredSizeIn(maxHeight = 100.dp),
-//                    )
+                    DeviceType.VIDEO_CAMERA -> Image(
+                    painter = rememberAsyncImagePainter(
+                        ImageRequest.Builder(context).data(data = R.drawable.tv_gif)
+                            .apply(block = {
+                                size(Size.ORIGINAL)
+                            }).build(), imageLoader = imageLoader
+                    ),
+                    contentDescription = null,
+                    modifier = Modifier.requiredSizeIn(maxHeight = 100.dp),
+                )
 
                     else -> Image(
                         painter = image,

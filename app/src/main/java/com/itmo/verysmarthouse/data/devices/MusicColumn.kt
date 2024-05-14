@@ -1,6 +1,7 @@
 package com.itmo.verysmarthouse.data.devices
 
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.painter.Painter
@@ -11,9 +12,10 @@ class MusicColumn(
     initialDeviceType: DeviceType,
     override val image: Painter,
     override val name: String,
-    initialStatus: Boolean
-) :
-    Device {
-    override var status by mutableStateOf(initialStatus)
+    initialStatus: Boolean,
+    initialVolume: Float,
+) : Device {
     override val deviceType by mutableStateOf(initialDeviceType)
+    override var status by mutableStateOf(initialStatus)
+    var volume by mutableFloatStateOf(initialVolume)
 }

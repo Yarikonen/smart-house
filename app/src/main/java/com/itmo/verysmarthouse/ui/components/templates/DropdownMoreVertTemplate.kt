@@ -37,7 +37,7 @@ fun DropdownMoreVertTemplate(onClick: () -> Unit){
                         contentDescription = ""
                     )
                 }
-                Text(text = "Создать")
+                Text(text = "Create")
             }
         }, onClick = {
             onClick()

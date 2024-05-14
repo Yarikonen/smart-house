@@ -13,6 +13,9 @@ class Curtains(
     override val image: Painter,
     override val name: String,
     initialStatus: Boolean,
+    initialOpenness: Float
 ) : Device {
     override var status by mutableStateOf(initialStatus)
+    var openness by mutableFloatStateOf(initialOpenness)
+
 }

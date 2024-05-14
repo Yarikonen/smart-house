@@ -9,5 +9,6 @@ enum class DeviceType (val value: String) {
     IRRIGATION_SYSTEM("Irrigation system"),
     AIR_CONDITIONER("Conditioner"),
     MUSIC_COLUMN("Music column"),
+    CURTAINS("CuRTAINS"),
     NONE("Other")
 }

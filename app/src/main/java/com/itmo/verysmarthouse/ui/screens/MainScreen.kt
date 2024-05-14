@@ -39,7 +39,7 @@ fun MainScreen(rooms: SnapshotStateList<Room>, onClick: (Room) -> Unit) {
         topBar = {
             Surface(shadowElevation = 5.dp) {
                 TopAppBar(
-                    title = { Text("Комнаты") },
+                    title = { Text("Rooms") },
                     actions = {
                         DropdownMoreVertTemplate {
                             dialogOpen.value = true
@@ -57,6 +57,7 @@ fun MainScreen(rooms: SnapshotStateList<Room>, onClick: (Room) -> Unit) {
             val bedroomPainter = painterResource(id = R.drawable.bedroom)
             val livingRoomPainter = painterResource(id = R.drawable.livingroom)
             val bathroomPainter = painterResource(id = R.drawable.bathroom)
+            val garagePainter = painterResource(id = R.drawable.garage)
 
             val lightPainter = painterResource(id = R.drawable.light)
             val videcamPainter = painterResource(id = R.drawable.camera)
@@ -73,6 +74,8 @@ fun MainScreen(rooms: SnapshotStateList<Room>, onClick: (Room) -> Unit) {
                             RoomType.BATHROOM -> bathroomPainter
 
                             RoomType.BEDROOM -> bedroomPainter
+
+                            RoomType.GARAGE-> garagePainter
 
                             else -> livingRoomPainter
                         },
@@ -91,8 +94,8 @@ fun MainScreen(rooms: SnapshotStateList<Room>, onClick: (Room) -> Unit) {
                 selectedElement = selectedElement,
                 getStringValue = { it.translation },
                 onValueChange = { selectedElement = it },
-                labelName = "Название комнаты",
-                labelType = "Тип комнаты"
+                labelName = "Room name",
+                labelType = "Room type"
             )
             Column(
                 modifier = Modifier.padding(top = 60.dp)
